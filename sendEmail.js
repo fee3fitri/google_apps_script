@@ -48,3 +48,24 @@ function sendEmail() {
     })
   }
 }
+
+// Move the data to sent list sheet
+function moveData() {
+  const newSheet = getNewSheet();
+  const values = getData();
+
+  console.log(values);
+
+  const sentSheet = getSentSheet();
+  const lastCol = sentSheet.getLastColumn();
+
+  console.log(lastCol);
+
+  for (let i = 1; i < values.length; i++) {
+    let sentRange = sentSheet.getRange(`A${i}:G${i}`);
+    let newRange = newSheet.getRange(`A${i}:G${i}`);
+
+    sentRange.setValues(values[i]);
+    newRange.deleteRow(2);
+  }
+}
