@@ -47,17 +47,17 @@ function sendEmail() {
       name: 'Fifi Shelton'
     })
   }
+
+  moveData();
 }
 
+// Move the data to sent list sheet
 // Move the data to sent list sheet
 // Move the data to sent list sheet
 function moveData() {
   const newSheet = getNewSheet();
   const sentSheet = getSentSheet();
-  const sentLastCol = sentSheet.getLastColumn();
   const values = getData();
-
-  console.log(values);
 
   for (let i = 0; i < values.length; i++) {
     let sentRange = sentSheet.getRange(`A${i + 2}:H${i + 2}`);
@@ -70,6 +70,8 @@ function moveData() {
     if (values[i]) values[i].push(localeDate);
 
     sentRange.setValues([values[i]]);
-    console.log(values[i])
+    newSheet.deleteRow(2);
   }
+
+  console.log(values);
 }
