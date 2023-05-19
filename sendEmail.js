@@ -23,7 +23,7 @@ function sendEmail() {
     const position = values[i][3];
     const job = values[i][4];
     const link = values[i][5];
-    const resume = values[i][6]
+    const resume = values[i][6];
 
     // HTML email
     const subject = `
@@ -32,7 +32,7 @@ function sendEmail() {
 
     const body = `
       <p>Hi ${firstName},<p>
-      <p>Today I applied for the <a href="${link} target="_blank">${job}</a> position and I noticed that you are a ${position} at ${company}. While I do not know if you are the right person to connect with, I definitely have the front-end developer experience your team is seeking. I believe I would be a great fit because I have the necessary experience and I'm capable of quickly learning new technical skills.</p>
+      <p>Today I applied for the <a href="${link} target="_blank">${job}</a> position and I noticed that you are a ${position} at ${company}. While I do not know if you are the right person to connect with, I definitely have the ${job} experience your team is seeking. I believe I would be a great fit because I have the necessary experience and I'm capable of quickly learning new technical skills.</p>
       <p>I imagine that you are really busy, but I would enjoy the opportunity to hop on a quick Zoom call to learn more about this role and the company.</p>
       <p>Would you possibly be free for a 15-minute Zoom call next week?</p>
       <p>In advance, I have attached my <a href="${resume}">resume</a> for your review. I appreciate your consideration and look forward to hearing from you.</p>
@@ -52,15 +52,14 @@ function sendEmail() {
 }
 
 // Move the data to sent list sheet
-// Move the data to sent list sheet
-// Move the data to sent list sheet
 function moveData() {
   const newSheet = getNewSheet();
   const sentSheet = getSentSheet();
+  let sentLastRow = sentSheet.getLastRow() - 1;
   const values = getData();
 
   for (let i = 0; i < values.length; i++) {
-    let sentRange = sentSheet.getRange(`A${i + 2}:H${i + 2}`);
+    let sentRange = sentSheet.getRange(`A${i + sentLastRow}:H${i + sentLastRow}`);
 
     const today = new Date();
     const localeDateTime = today.toLocaleString();
