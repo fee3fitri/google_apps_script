@@ -50,22 +50,26 @@ function sendEmail() {
 }
 
 // Move the data to sent list sheet
+// Move the data to sent list sheet
 function moveData() {
   const newSheet = getNewSheet();
+  const sentSheet = getSentSheet();
+  const sentLastCol = sentSheet.getLastColumn();
   const values = getData();
 
   console.log(values);
 
-  const sentSheet = getSentSheet();
-  const lastCol = sentSheet.getLastColumn();
+  for (let i = 0; i < values.length; i++) {
+    let sentRange = sentSheet.getRange(`A${i + 2}:H${i + 2}`);
 
-  console.log(lastCol);
+    const today = new Date();
+    const localeDateTime = today.toLocaleString();
+    const comma = localeDateTime.indexOf(',');
+    const localeDate = localeDateTime.slice(0, comma);
 
-  for (let i = 1; i < values.length; i++) {
-    let sentRange = sentSheet.getRange(`A${i}:G${i}`);
-    let newRange = newSheet.getRange(`A${i}:G${i}`);
+    if (values[i]) values[i].push(localeDate);
 
-    sentRange.setValues(values[i]);
-    newRange.deleteRow(2);
+    sentRange.setValues([values[i]]);
+    console.log(values[i])
   }
 }
